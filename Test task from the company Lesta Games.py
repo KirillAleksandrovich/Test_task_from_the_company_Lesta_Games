@@ -121,3 +121,12 @@ def zagruzit_fayl():
 
     # Для GET-запросов показываем форму загрузки
     return render_template('upload.html')
+
+
+if __name__ == '__main__':
+    # Добавляем папку static для логотипа
+    app.config['STATIC_FOLDER'] = 'static'
+    if not os.path.exists(app.config['STATIC_FOLDER']):
+        os.makedirs(app.config['STATIC_FOLDER'])
+    # Запускаем сервер в режиме отладки
+    app.run(debug=True)
