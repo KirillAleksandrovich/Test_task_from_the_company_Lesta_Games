@@ -76,3 +76,48 @@ def vichislit_idf(spisok_slov, tf_slovar):
         idf_slovar[slovo] = math.log(vsego_slov / tf_slovar[slovo])
 
     return idf_slovar
+
+
+@app.route('/', methods=['GET', 'POST'])
+def zagruzit_fayl():
+    """
+    Основная функция обработки запросов:
+    1. GET: Показывает форму загрузки
+    2. POST: Обрабатывает загруженный файл
+    """
+    if request.method == 'POST':
+        # Проверяем, есть ли файл в запросе
+        if 'fayl' not in request.files:
+            return redirect(request.url)  # Если нет - перезагружаем страницу
+
+        fayl = request.files['fayl']
+
+        # Проверяем, что файл выбран
+        if fayl.filename == '':
+            return redirect(request.url)
+
+        # Если файл корректный
+        if fayl:
+            # Сохраняем файл в папку загрузок
+            put_k_faylu = os.path.join(app.config['UPLOAD_FOLDER'], fayl.filename)
+            fayl.save(put_k_faylu)
+
+            # Читаем содержимое файла
+            with open(put_k_faylu, 'r', encoding='utf-8') as f:
+                tekst = f.read()
+
+            # Обрабатываем текст
+            slova = obrabotat_tekst(tekst)
+
+            # Вычисляем метрики
+            tf = vichislit_tf(slova)
+            idf = vichislit_idf(slova, tf)
+
+            # Сортируем слова по IDF (по убыванию) и берём топ-50
+            otsortirovannye_slova = sorted(idf.items(), key=lambda x: x[1], reverse=True)[:50]
+
+            # Передаём данные в шаблон result.html
+            return render_template('result.html', slova=otsortirovannye_slova, tf=tf)
+
+    # Для GET-запросов показываем форму загрузки
+    return render_template('upload.html')
