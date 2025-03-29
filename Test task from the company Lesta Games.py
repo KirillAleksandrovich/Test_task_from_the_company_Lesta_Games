@@ -14,3 +14,21 @@ app.config['UPLOAD_FOLDER'] = 'zagruzki'
 # Создаём папку для загрузок, если её нет
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
+
+
+def obrabotat_tekst(tekst):
+    """
+    Обрабатывает исходный текст:
+    1. Приводит к нижнему регистру
+    2. Удаляет все символы, кроме букв и цифр
+    3. Разбивает на отдельные слова
+
+    Аргументы:
+        tekst (str): Исходный текст из файла
+
+    Возвращает:
+        list: Список очищенных слов в нижнем регистре
+    """
+    # \b - граница слова, \w+ - одно или больше букв/цифр
+    slova = re.findall(r'\b\w+\b', tekst.lower())
+    return slova
