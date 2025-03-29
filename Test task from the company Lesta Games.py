@@ -52,3 +52,27 @@ def vichislit_tf(spisok_slov):
         chastota_slov[slovo] += 1  # Увеличиваем счётчик для каждого слова
 
     return chastota_slov
+
+
+def vichislit_idf(spisok_slov, tf_slovar):
+    """
+    Вычисляет обратную частоту документов (IDF - Inverse Document Frequency):
+    Показывает, насколько слово редкое во всём тексте
+
+    Аргументы:
+        spisok_slov (list): Исходный список всех слов
+        tf_slovar (dict): Словарь с частотами слов (результат TF)
+
+    Возвращает:
+        dict: Словарь {слово: значение_IDF}
+    """
+    idf_slovar = {}
+    vsego_slov = len(spisok_slov)  # Общее количество слов в тексте
+    unikalnye_slova = set(spisok_slov)  # Уникальные слова
+
+    for slovo in unikalnye_slova:
+        # Формула IDF: логарифм (общее_число_слов / частота_слова)
+        # Чем больше IDF, тем редче слово
+        idf_slovar[slovo] = math.log(vsego_slov / tf_slovar[slovo])
+
+    return idf_slovar
