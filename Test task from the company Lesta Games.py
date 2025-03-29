@@ -32,3 +32,23 @@ def obrabotat_tekst(tekst):
     # \b - граница слова, \w+ - одно или больше букв/цифр
     slova = re.findall(r'\b\w+\b', tekst.lower())
     return slova
+
+
+def vichislit_tf(spisok_slov):
+    """
+    Вычисляет частоту терминов (TF - Term Frequency):
+    Сколько раз каждое слово встречается в тексте
+
+    Аргументы:
+        spisok_slov (list): Список слов из текста
+
+    Возвращает:
+        defaultdict: Словарь {слово: количество_повторений}
+    """
+    # defaultdict автоматически инициализирует счётчик для новых слов
+    chastota_slov = defaultdict(int)
+
+    for slovo in spisok_slov:
+        chastota_slov[slovo] += 1  # Увеличиваем счётчик для каждого слова
+
+    return chastota_slov
