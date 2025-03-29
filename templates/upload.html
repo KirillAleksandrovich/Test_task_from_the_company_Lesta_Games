@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Заголовок страницы -->
+    <title>Анализатор TF-IDF</title>
+
+    <!-- Стили для красивого отображения -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;  /* Шрифт */
+            margin: 20px;  /* Отступы */
+        }
+        h1 {
+            color: #333;  /* Цвет заголовка */
+        }
+        form {
+            margin: 20px 0;  /* Отступ формы */
+        }
+        button {
+            padding: 8px 15px;  /* Размер кнопки */
+            background: #4CAF50;  /* Зелёный цвет */
+            color: white;  /* Белый текст */
+            border: none;  /* Без рамки */
+            cursor: pointer;  /* Курсор-указатель */
+        }
+        button:hover {
+            background: #45a049;  /* Цвет при наведении */
+        }
+    </style>
+</head>
+<body>
+    <!-- Заголовок формы -->
+    <h1>Загрузите текстовый файл</h1>
+
+    <!--
+        Форма загрузки:
+        method="post" - отправка данных на сервер
+        enctype="multipart/form-data" - необходимо для загрузки файлов
+    -->
+    <form method="post" enctype="multipart/form-data">
+        <!--
+            Поле выбора файла:
+            accept=".txt" - разрешаем только .txt файлы
+            required - обязательное поле
+        -->
+        <input type="file" name="fayl" accept=".txt" required>
+
+        <!-- Кнопка отправки формы -->
+        <button type="submit">Анализировать</button>
+    </form>
+</body>
+</html>
